@@ -1,7 +1,9 @@
 package com.CoWork.CoWork.controller;
 
-import com.CoWork.CoWork.*;
+import com.CoWork.CoWork.model.Espacio;
 import com.CoWork.CoWork.service.EspacioService;
+
+import com.CoWork.CoWork.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,7 @@ public class EspacioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Espacio>> listarTodos(@RequestParam(required = false) String categoria) {
+    public ResponseEntity<List<com.cowork.api.model.Espacio>> listarTodos(@RequestParam(required = false) String categoria) {
         if (categoria != null && !categoria.isBlank()) {
             return ResponseEntity.ok(espacioService.buscarPorCategoria(categoria));
         }
@@ -43,7 +45,6 @@ public class EspacioController {
         }
     }
 
-    // 4. PUT /api/espacios/{id}
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Espacio espacio) {
         try {
@@ -55,12 +56,11 @@ public class EspacioController {
         }
     }
 
-    // 5. DELETE /api/espacios/{id}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         if (espacioService.eliminar(id)) {
-            return ResponseEntity.noContent().build(); // 204 No Content
+            return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.notFound().build(); // 404 Not Found
+        return ResponseEntity.notFound().build();
     }
 }
